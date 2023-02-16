@@ -40,7 +40,7 @@ A principal diferença entre uma Entity e uma Model é que uma Entity representa
     }
 ```
 
-1. Toda vez que for necessário interagir com o banco de dados, utilize o método **SaveChanges** para persistir os dados.
+Toda vez que for necessário interagir com o banco, utilize o método **SaveChanges** para persistir os dados.
 
 ```Csharp
     var tag = new Tag { Name = "ASP.NET", Slug = "aspnet" };
