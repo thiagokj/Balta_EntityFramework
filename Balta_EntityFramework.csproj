@@ -5,7 +5,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <NoWarn>8618</NoWarn>
+    <NoWarn>8618; 8321</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,7 +1,17 @@
 ﻿using Balta_EntityFramework.Models;
 using Blog.Data;
+using Microsoft.EntityFrameworkCore;
+
+Console.Clear();
 
 using (var context = new BlogDataContext())
+{
+
+    ExemploDiferencaEntreFirstSingle();
+
+}
+
+void ExemploCRUD()
 {
     /*
         Exemplo de INSERT no banco.
@@ -51,21 +61,63 @@ using (var context = new BlogDataContext())
     // }
 
     /*
-        Exemplo de SELECT no banco, filtrando e ordenando.
+        Exemplo de SELECT aprimorado no banco, filtrando e ordenando.
+
         É de EXTREMA importância fazer o filtro ANTES de chamar
         o ToList(). Assim evitamos problemas de performance, pois serão
-        recuperados apenas os dados já filtrados.
-        Caso contrário, todos os registros são retornados e posteriormente
-        filtrados na aplicação.
-    */
-    var tags = context
-        .Tags
-        .Where(x => x.Name.Contains("DOT"))
-        .ToList();
+        recuperados apenas os dados já filtrados. Caso contrário, todos os
+        registros são retornados e posteriormente filtrados na aplicação.
 
-    foreach (var tag in tags)
-    {
-        Console.WriteLine($"Id: {tag.Id} - Tag: {tag.Name} - Slug: {tag.Slug}");
-    }
+        Um segundo ponto é adicionar a instrução AsNoTracking()
+        antes do ToList(). Dessa forma o EF não retorna metadados, que
+        são usados apenas nos casos de alteração e exclusão de
+        registros, melhorando ainda mais a performance.
+    */
+    // var tags = context
+    //     .Tags
+    //     .Where(x => x.Name.Contains("DOT"))
+    //     .AsNoTracking()
+    //     .ToList();
+
+    // foreach (var tag in tags)
+    // {
+    //     Console.WriteLine($"Id: {tag.Id} - Tag: {tag.Name} - Slug: {tag.Slug}");
+    // }
 }
 
+void ExemploDiferencaEntreFirstSingle()
+{
+    using (var context = new BlogDataContext())
+    {
+        /*  
+            Todos os métodos tipo de lista executam a consulta no banco.
+
+            FirstOrDefault | Método mais utilizado, retorna apenas
+            o primeiro registro encontrado.
+            Não lança exceção caso haja mais registros conforme o filtro.
+
+            Se não existir o registro, retorna nulo.
+            É necessário informar o null safe para exibir
+            o item e evitar exceção.
+        */
+        // var tag = context
+        //     .Tags
+        //     .AsNoTracking()
+        //     .FirstOrDefault(x => x.Id == 5);
+        // Console.WriteLine(tag?.Name);
+
+        /*  
+            SingleOrDefault | Retorna um único registro encontrado,
+            caso haja duplicidade, lança uma exceção.
+
+            Se não existir o registro, retorna nulo.
+            É necessário informar o null safe para exibir
+            o item e evitar exceção.
+        */
+        var tag = context
+            .Tags
+            .AsNoTracking()
+            .SingleOrDefault(x => x.Id == 6);
+        Console.WriteLine(tag?.Name);
+    }
+}
