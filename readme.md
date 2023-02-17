@@ -57,3 +57,60 @@ Toda vez que for necessário interagir com o banco, utilize o método **SaveChan
     context.Remove(tag);
     context.SaveChanges();
 ```
+
+## Mapeamento
+
+O mapeamento dos objetos com as tabelas podem ser feitos de 2 formas:
+
+**DataAnnotations** | Forma mais simples de fazer o DE/PARA, adicionando anotações
+nas classes.
+Basta informar qual é o nome da tabela e qual é a chave primaria para relacionar.
+
+```Csharp
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Balta_EntityFramework.Models
+{
+[Table("Category")]
+    public class Category
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Required]
+        [MinLength(3)]
+        [MaxLength(80)]
+        [Column("Name", TypeName = "NVARCHAR")]
+        public string Name { get; set; }
+
+        [Required]
+        [MinLength(3)]
+        [MaxLength(80)]
+        [Column("Slug", TypeName = "VARCHAR")]
+        public string Slug { get; set; }
+    }
+}
+```
+
+Para indicar a chave estrangeira, deve ser utilizada a anotação **ForeignKey**.
+Em seguida, crie uma propriedade do tipo da classe que nos referimos.
+Isso permite o Entity Framework faça a navegação pela propriedade.
+
+```Csharp
+// Trecho das anotações na classe Post
+...
+        [ForeignKey("CategoryId")]
+        public int CategoryId { get; set; }
+        public Category Category { get; set; } // Propriedade de navegação do EF
+
+        [ForeignKey("AuthorId")]
+        public int AuthorId { get; set; }
+        public User Author { get; set; } // Propriedade de navegação do EF
+...
+```
+
+**FluentMapping** | Forma aprimorada fazer o DE/PARA, com mais recursos e possibilidades
+de automatizar tarefas como criação de telas para interação.
+Basta informar qual é o nome da tabela e qual é a chave primaria para relacionar.
