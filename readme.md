@@ -1,6 +1,6 @@
 # Csharp Entity Framework
 
-Projeto para estudo e revisão de conceitos utilizando o EF.
+Projeto para estudo e revisão de conceitos utilizando o EF e Data Annotations.
 
 ## Requisitos
 
@@ -111,6 +111,4 @@ Isso permite o Entity Framework faça a navegação pela propriedade.
 ...
 ```
 
-**FluentMapping** | Forma aprimorada fazer o DE/PARA, com mais recursos e possibilidades
-de automatizar tarefas como criação de telas para interação.
-Basta informar qual é o nome da tabela e qual é a chave primaria para relacionar.
+**FluentMapping** | Forma aprimorada fazer o DE/PARA, o Mapeamento Fluente possui uma separação muito boa do EF do que é o Core da aplicação.

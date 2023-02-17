@@ -7,7 +7,6 @@ Console.Clear();
 using (var context = new BlogDataContext())
 {
 
-
 }
 
 void ExemploDeUpdateEmUmSubConjunto(BlogDataContext context)
